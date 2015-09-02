@@ -6030,7 +6030,10 @@ MORE INFORMATION:
         elif verbose_fp:
             verbose_fp.write("%shas errors\n" % pfx)
 
-        return success
+        if success == True:
+            return True
+        else:
+            return False
 
 
     def main( self, argv ):
