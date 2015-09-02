@@ -16,7 +16,6 @@ script:
  - PYTHONPATH=.. python test_demjson.py
 
 after_script:
- - coverage report
  - pip install pep8 pyflakes
  - pep8 --statistics --count .
  - pyflakes . | tee >(wc -l)
