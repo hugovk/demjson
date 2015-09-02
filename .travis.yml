@@ -12,7 +12,8 @@ python:
 sudo: false
 
 script:
- - python test/test_demjson.py -v
+ - cd test
+ - PYTHONPATH=.. python test_demjson.py
 
 after_script:
  - coverage report
