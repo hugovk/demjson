@@ -14,6 +14,7 @@ sudo: false
 
 script:
  - python setup.py install
+ - if [ ${TRAVIS_PYTHON_VERSION:0:1} == "3" ]; then 2to3 -w demjson.py; fi
  - cd test
  - if [ ${TRAVIS_PYTHON_VERSION:0:1} == "3" ]; then 2to3 -w test_demjson.py; fi
  - PYTHONPATH=.. python test_demjson.py
