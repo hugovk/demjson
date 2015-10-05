@@ -13,6 +13,7 @@ python:
 sudo: false
 
 script:
+ - python setup.py install
  - cd test
  - PYTHONPATH=.. python test_demjson.py
 
