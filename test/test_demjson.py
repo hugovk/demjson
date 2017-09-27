@@ -28,13 +28,10 @@ import demjson
 # Python version-specific stuff...
 
 is_python3 = False
-is_python27_plus = False
 try:
     is_python3 = (sys.version_info.major >= 3)
-    is_python27_plus = (sys.version_info.major > 2 or (sys.version_info.major==2 and sys.version_info.minor >= 7))
 except AttributeError:
     is_python3 = (sys.version_info[0] >= 3)
-    is_python27_plus = (sys.version_info[0] > 2 or (sys.version_info[0]==2 and sys.version_info[1] >= 7))
 
 is_wide_python = (sys.maxunicode > 0xFFFF)
 
@@ -55,8 +52,6 @@ if hasattr(unittest, 'skipUnless'):
         return unittest.skipUnless(method, not is_python3)
     def skipUnlessPython3(method):
         return unittest.skipUnless(method, is_python3)
-    def skipUnlessPython27(method):
-        return unittest.skipUnless(method, is_python27_plus)
     def skipUnlessWidePython(method):
         return unittest.skipUnless(method, is_wide_python)
 else:
@@ -68,11 +63,6 @@ else:
     def skipUnlessPython3(method):
         def always_pass(self):
             print("\nSKIPPING TEST %s: Requires Python 3" % method.__name__)
-            return True
-        return always_pass
-    def skipUnlessPython27(method):
-        def always_pass(self):
-            print("\nSKIPPING TEST %s: Requires Python 2.7 or greater" % method.__name__)
             return True
         return always_pass
     def skipUnlessWidePython(method):
@@ -673,7 +663,7 @@ class DemjsonTest(unittest.TestCase):
         self.assertEqual(demjson.decode( rawbytes([ 0xFF, 0xFE, FOUR, 0 ]) ), 4 )
         self.assertRaises(demjson.JSONDecodeError,
                           demjson.decode, rawbytes([ 0xFF, 0xFE, 0, FOUR ]) )
-        
+
         # Invalid Unicode strings
         self.assertRaises(demjson.JSONDecodeError,
                           demjson.decode, rawbytes([ 0 ]) )
@@ -1170,7 +1160,6 @@ class DemjsonTest(unittest.TestCase):
         self.assertEqual(demjson.encode( d, sort_keys=demjson.SORT_SMART ),
                          '{"apple":1,"Ball":1,"cat":1,"dog1":1,"dog002":1,"DOG03":1,"dog10":1}' )
 
-    @skipUnlessPython27
     def testEncodeDictPreserveSorting(self):
         import collections
         d = collections.OrderedDict()
@@ -1509,7 +1498,7 @@ def run_all_tests():
     if int( demjson.__version__.split('.',1)[0] ) < 2:
         print('WARNING: TESTING AGAINST AN OLD VERSION!')
     unittest.main()
-    
+
 if __name__ == '__main__':
     run_all_tests()
 
