@@ -42,25 +42,10 @@ except ImportError:
 
 # ====================
 
-if hasattr(unittest, 'skipUnless'):
-    def skipUnlessPython3(method):
-        return unittest.skipUnless(method, is_python3)
-    def skipUnlessWidePython(method):
-        return unittest.skipUnless(method, is_wide_python)
-else:
-    # Python <= 2.6 does not have skip* decorators, so
-    # just make a dummy decorator that always passes the
-    # test method.
-    def skipUnlessPython3(method):
-        def always_pass(self):
-            print "\nSKIPPING TEST %s: Requires Python 3" % method.__name__
-            return True
-        return always_pass
-    def skipUnlessWidePython(method):
-        def always_pass(self):
-            print "\nSKIPPING TEST %s: Requires Python with wide Unicode support (maxunicode > U+FFFF)" % method.__name__
-            return True
-        return always_pass
+def skipUnlessPython3(method):
+    return unittest.skipUnless(method, is_python3)
+def skipUnlessWidePython(method):
+    return unittest.skipUnless(method, is_wide_python)
 
 ## ------------------------------
 
