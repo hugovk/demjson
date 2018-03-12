@@ -18,9 +18,9 @@ script:
  - PYTHONPATH=.. python test_demjson.py
 
 after_script:
- - pip install pep8 pyflakes
- - pep8 --statistics --count .
+ - pip install pycodestyle pyflakes
  - pyflakes . | tee >(wc -l)
+ - pycodestyle --statistics --count .
 
 matrix:
   fast_finish: true
